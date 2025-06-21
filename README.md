@@ -1,134 +1,30 @@
-const words = [
-    {tg: "об", en: "water"},
-    {tg: "китоб", en: "book"},
-    {tg: "хона", en: "house"},
-    {tg: "дӯст", en: "friend"},
-    {tg: "шаб", en: "night"},
-    {tg: "рӯзи", en: "day"},
-    {tg: "замин", en: "earth"},
-    {tg: "сохтор", en: "structure"},
-    {tg: "санг", en: "stone"},
-    {tg: "дарё", en: "river"},
-    {tg: "ситора", en: "star"},
-    {tg: "осмон", en: "sky"},
-    {tg: "барқ", en: "electricity"},
-    {tg: "душворӣ", en: "difficulty"},
-    {tg: "саломатӣ", en: "health"},
-    {tg: "ташаккур", en: "thank"},
-    {tg: "шаҳр", en: "city"},
-    {tg: "шумо", en: "you"},
-    {tg: "модар", en: "mother"},
-    {tg: "падар", en: "father"},
-    {tg: "талаб", en: "student"},
-    {tg: "хоб", en: "sleep"},
-    {tg: "ишқ", en: "love"},
-    {tg: "саҳар", en: "morning"},
-    {tg: "даст", en: "hand"},
-    {tg: "пой", en: "foot"},
-    {tg: "ҷангал", en: "forest"},
-    {tg: "гул", en: "flower"},
-    {tg: "дили", en: "heart"},
-    {tg: "муҳаббат", en: "affection"},
-    {tg: "муҳандис", en: "engineer"},
-    {tg: "рӯй", en: "face"},
-    {tg: "чашм", en: "eye"},
-    {tg: "забон", en: "language"},
-    {tg: "маҳсулот", en: "product"},
-    {tg: "технология", en: "technology"},
-    {tg: "дарс", en: "lesson"},
-    {tg: "табобат", en: "treatment"},
-    {tg: "шикан", en: "break"},
-    {tg: "озодӣ", en: "freedom"},
-    {tg: "компютер", en: "computer"},
-    {tg: "китобхона", en: "library"},
-    {tg: "соат", en: "clock"},
-    {tg: "кор", en: "work"},
-    {tg: "фарзанд", en: "child"},
-    {tg: "ҳаво", en: "air"},
-    {tg: "дари", en: "door"},
-    {tg: "мактаб", en: "school"},
-    {tg: "муаллим", en: "teacher"},
-    {tg: "зебоӣ", en: "beauty"}
-];
+<!DOCTYPE html>
+<html lang="tg">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Луғати тоҷикӣ ба англисӣ - Quiz</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="container">
+        <h1>Луғат: тоҷикӣ ба англисӣ</h1>
+        <div id="status">
+            <span id="current">1</span> / <span id="total">50</span>
+        </div>
+        <div id="timer">Вақт: 09:00</div>
+        <div id="question">Луғат дар ин ҷо пайдо мешавад</div>
+        <input type="text" id="answer" placeholder="Ҷавоби англисӣ" autocomplete="off" />
+        <button id="submitBtn">Ҷавоб додан</button>
+        <div id="result"></div>
 
-let currentIndex = 0;
-let correctCount = 0;
-let timer;
-let timeLeft = 540; // 9 дақиқа = 540 сония
+        <div id="endScreen" class="hidden">
+            <h2>Бози тамом шуд!</h2>
+            <p>Ҷавобҳои дуруст: <span id="correctCount">0</span> / 50</p>
+            <button id="restartBtn">Аз нав сар кардан</button>
+        </div>
+    </div>
 
-const currentEl = document.getElementById("current");
-const totalEl = document.getElementById("total");
-const timerEl = document.getElementById("timer");
-const questionEl = document.getElementById("question");
-const answerEl = document.getElementById("answer");
-const submitBtn = document.getElementById("submitBtn");
-const resultEl = document.getElementById("result");
-const endScreen = document.getElementById("endScreen");
-const correctCountEl = document.getElementById("correctCount");
-const restartBtn = document.getElementById("restartBtn");
-
-totalEl.textContent = words.length;
-
-function startTimer() {
-    timerEl.textContent = Вақт: ${formatTime(timeLeft)};
-    timer = setInterval(() => {
-        timeLeft--;
-        timerEl.textContent = Вақт: ${formatTime(timeLeft)};
-        if (timeLeft <= 0) {
-            clearInterval(timer);
-            finishQuiz();
-        }
-    }, 1000);
-}
-
-function formatTime(seconds) {
-    const m = Math.floor(seconds / 60).toString().padStart(2, "0");
-    const s = (seconds % 60).toString().padStart(2, "0");
-    return ${m}:${s};
-}
-
-function showQuestion() {
-    if (currentIndex < words.length) {
-        questionEl.textContent = words[currentIndex].tg;
-        currentEl.textContent = currentIndex + 1;
-        answerEl.value = "";
-        answerEl.focus();
-        resultEl.textContent = "";
-    } else {
-        finishQuiz();
-    }
-}
-
-function checkAnswer() {
-    const userAnswer = answerEl.value.trim().toLowerCase();
-    const correctAnswer = words[currentIndex].en.toLowerCase();
-
-    if (!userAnswer) {
-        resultEl.textContent = "Лутфан ҷавоб ворид кунед!";
-        return;
-    }
-
-    if (userAnswer === correctAnswer) {
-        correctCount++;
-        resultEl.textContent = "Ҷавоби дуруст! ✅";
-    } else {
-        resultEl.textContent = Ҷавоби нодуруст! ❌ Ҷавоб дуруст: ${words[currentIndex].en};
-    }
-    currentIndex++;
-    if (currentIndex < words.length) {
-        setTimeout(showQuestion, 1000);
-    } else {
-        finishQuiz();
-    }
-}
-
-function finishQuiz() {
-    clearInterval(timer);
-    questionEl.style.display = "none";
-    answerEl.style.display = "none";
-    submitBtn.style.display = "none";
-    resultEl.style.display = "none";
-    timerEl.style.display = "none";
-    document.getElementById("status").style.display = "none";
-
-    endScreen.
+    <script src="script.js"></script>
+</body>
+</html>
