@@ -6,21 +6,17 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
   <div class="container">
-    <h1>Луғатро ба англисӣ тарҷума кун</h1>
-    <p id="counter">1 / 50</p>
-    <p id="word">...</p>
-
-    <input type="text" id="answerInput" placeholder="Answer in English">
-    <button onclick="checkAnswer()">Ҷавоб</button>
-
-    <p id="feedback"></p>
-    <div id="resultSection" style="display: none;">
-      <button onclick="restart()">Аз нав сар кардан</button>
-      <button onclick="showResults()">Натиҷаҳо</button>
-    </div>
-    <div id="resultsList"></div>
+    <h1>Луғатсанҷ</h1>
+    <div id="word-counter">1 / 50</div>
+    <div id="word"></div>
+    <input type="text" id="answer" placeholder="Тарҷумаи англисиро ворид кунед">
+    <button onclick="checkAnswer()">Санҷиш</button>
+    <div id="result"></div>
   </div>
+
+  <!-- ✅ JavaScript ПЕШ аз бастани body -->
   <script src="script.js"></script>
 </body>
 </html>
