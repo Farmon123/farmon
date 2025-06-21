@@ -1,53 +1,77 @@
-if (userAnswer === correctAnswer) {
-        correctCount++;
-      }
-      nextQuestion();
-    });
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Луғатсупорӣ бо Фармон</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      margin: 50px;
+    }
+    #word-box {
+      font-size: 24px;
+      margin: 20px;
+    }
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+    input, button {
+      font-size: 18px;
+      padding: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Луғатсупорӣ</h1>
+  <div id="word-box">...</div>
+  <input type="text" id="answer" placeholder="Ҷавоби англисиро навис...">
+  <button onclick="checkAnswer()">Санҷидан</button>
+  <div id="result"></div>
 
-    restartBtn.addEventListener('click', () => {
-      currentIndex = 0;
-      correctCount = 0;
-      timeLeft = 9 * 60;
-      submitBtn.disabled = false;
-      answerInput.disabled = false;
-      restartBtn.style.display = 'none';
-      showResultsBtn.style.display = 'none';
-      resultEl.textContent = '';
-      updateProgress();
-      updateQuestion();
-      displayTime();
-      startTimer();
-    });
+  <script>
+    const words = [
+      {tajik: "писандидан", english: "admired"},
+      {tajik: "мутавозин", english: "balanced"},
+      {tajik: "корҳои мактабӣ", english: "schoolwork"},
+      {tajik: "фаъолиятҳои беруназсинфӣ", english: "extracurriculars"},
+      {tajik: "ба назар мерасид", english: "seemed"},
+      {tajik: "бе заҳмат", english: "effortless"},
+      {tajik: "манзараҳо", english: "scenes"},
+      {tajik: "роҳатӣ", english: "ease"},
+      {tajik: "якҷо анҷом додан", english: "juggled"},
+      {tajik: "вазн", english: "weight"},
+    ];
 
-    showResultsBtn.addEventListener('click', () => {
-      resultEl.textContent = Ҷавобҳои дуруст: ${correctCount} аз ${totalQuestions};
-    });
+    let current = 0;
 
-    function startTimer() {
-      clearInterval(window.quizTimer);
-      window.quizTimer = setInterval(() => {
-        if (timeLeft <= 0) {
-          clearInterval(window.quizTimer);
-          endQuiz();
-        } else {
-          timeLeft--;
-          displayTime();
-        }
-      }, 1000);
+    function showWord() {
+      document.getElementById("word-box").textContent = "Тарҷума: " + words[current].tajik;
+      document.getElementById("answer").value = "";
+      document.getElementById("result").textContent = "";
     }
 
-    // Аввалин бор оғоз мекунем
-    updateProgress();
-    updateQuestion();
-    displayTime();
-    startTimer();
+    function checkAnswer() {
+      const input = document.getElementById("answer").value.trim().toLowerCase();
+      const correct = words[current].english.toLowerCase();
+      const result = document.getElementById("result");
 
-    // Барои ворид кардани Enter дар input, барои submit кардан
-    answerInput.addEventListener('keyup', (event) => {
-      if (event.key === 'Enter') {
-        submitBtn.click();
+      if (input === correct) {
+        result.textContent = "✅ Дуруст!";
+        current++;
+        if (current < words.length) {
+          setTimeout(showWord, 1000);
+        } else {
+          result.textContent = "🎉 Тамом шуд! Офарин!";
+          document.getElementById("word-box").textContent = "";
+        }
+      } else {
+        result.textContent = "❌ Нодуруст. Аз нав кӯшиш кун!";
       }
-    });
+    }
+
+    window.onload = showWord;
   </script>
 </body>
 </html>
