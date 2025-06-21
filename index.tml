@@ -42,7 +42,6 @@
       {tajik: "роҳатӣ", english: "ease"},
       {tajik: "якҷо анҷом додан", english: "juggled"},
       {tajik: "вазн", english: "weight"},
-      // ... Метавонам ҳамаи 70+ калимаро илова кунам агар хоҳӣ.
     ];
 
     let current = 0;
