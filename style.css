@@ -1,134 +1,39 @@
-const words = [
-    {tg: "об", en: "water"},
-    {tg: "китоб", en: "book"},
-    {tg: "хона", en: "house"},
-    {tg: "дӯст", en: "friend"},
-    {tg: "шаб", en: "night"},
-    {tg: "рӯзи", en: "day"},
-    {tg: "замин", en: "earth"},
-    {tg: "сохтор", en: "structure"},
-    {tg: "санг", en: "stone"},
-    {tg: "дарё", en: "river"},
-    {tg: "ситора", en: "star"},
-    {tg: "осмон", en: "sky"},
-    {tg: "барқ", en: "electricity"},
-    {tg: "душворӣ", en: "difficulty"},
-    {tg: "саломатӣ", en: "health"},
-    {tg: "ташаккур", en: "thank"},
-    {tg: "шаҳр", en: "city"},
-    {tg: "шумо", en: "you"},
-    {tg: "модар", en: "mother"},
-    {tg: "падар", en: "father"},
-    {tg: "талаб", en: "student"},
-    {tg: "хоб", en: "sleep"},
-    {tg: "ишқ", en: "love"},
-    {tg: "саҳар", en: "morning"},
-    {tg: "даст", en: "hand"},
-    {tg: "пой", en: "foot"},
-    {tg: "ҷангал", en: "forest"},
-    {tg: "гул", en: "flower"},
-    {tg: "дили", en: "heart"},
-    {tg: "муҳаббат", en: "affection"},
-    {tg: "муҳандис", en: "engineer"},
-    {tg: "рӯй", en: "face"},
-    {tg: "чашм", en: "eye"},
-    {tg: "забон", en: "language"},
-    {tg: "маҳсулот", en: "product"},
-    {tg: "технология", en: "technology"},
-    {tg: "дарс", en: "lesson"},
-    {tg: "табобат", en: "treatment"},
-    {tg: "шикан", en: "break"},
-    {tg: "озодӣ", en: "freedom"},
-    {tg: "компютер", en: "computer"},
-    {tg: "китобхона", en: "library"},
-    {tg: "соат", en: "clock"},
-    {tg: "кор", en: "work"},
-    {tg: "фарзанд", en: "child"},
-    {tg: "ҳаво", en: "air"},
-    {tg: "дари", en: "door"},
-    {tg: "мактаб", en: "school"},
-    {tg: "муаллим", en: "teacher"},
-    {tg: "зебоӣ", en: "beauty"}
-];
-
-let currentIndex = 0;
-let correctCount = 0;
-let timer;
-let timeLeft = 540; // 9 дақиқа = 540 сония
-
-const currentEl = document.getElementById("current");
-const totalEl = document.getElementById("total");
-const timerEl = document.getElementById("timer");
-const questionEl = document.getElementById("question");
-const answerEl = document.getElementById("answer");
-const submitBtn = document.getElementById("submitBtn");
-const resultEl = document.getElementById("result");
-const endScreen = document.getElementById("endScreen");
-const correctCountEl = document.getElementById("correctCount");
-const restartBtn = document.getElementById("restartBtn");
-
-totalEl.textContent = words.length;
-
-function startTimer() {
-    timerEl.textContent = Вақт: ${formatTime(timeLeft)};
-    timer = setInterval(() => {
-        timeLeft--;
-        timerEl.textContent = Вақт: ${formatTime(timeLeft)};
-        if (timeLeft <= 0) {
-            clearInterval(timer);
-            finishQuiz();
-        }
-    }, 1000);
+body {
+  background-color: #d0e8ff;
+  font-family: sans-serif;
+  text-align: center;
+  padding: 30px;
 }
 
-function formatTime(seconds) {
-    const m = Math.floor(seconds / 60).toString().padStart(2, "0");
-    const s = (seconds % 60).toString().padStart(2, "0");
-    return ${m}:${s};
+.container {
+  background-color: white;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 500px;
+  margin: auto;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-function showQuestion() {
-    if (currentIndex < words.length) {
-        questionEl.textContent = words[currentIndex].tg;
-        currentEl.textContent = currentIndex + 1;
-        answerEl.value = "";
-        answerEl.focus();
-        resultEl.textContent = "";
-    } else {
-        finishQuiz();
-    }
+input {
+  padding: 10px;
+  width: 60%;
+  margin-bottom: 10px;
 }
 
-function checkAnswer() {
-    const userAnswer = answerEl.value.trim().toLowerCase();
-    const correctAnswer = words[currentIndex].en.toLowerCase();
-
-    if (!userAnswer) {
-        resultEl.textContent = "Лутфан ҷавоб ворид кунед!";
-        return;
-    }
-
-    if (userAnswer === correctAnswer) {
-        correctCount++;
-        resultEl.textContent = "Ҷавоби дуруст! ✅";
-    } else {
-        resultEl.textContent = Ҷавоби нодуруст! ❌ Ҷавоб дуруст: ${words[currentIndex].en};
-    }
-    currentIndex++;
-    if (currentIndex < words.length) {
-        setTimeout(showQuestion, 1000);
-    } else {
-        finishQuiz();
-    }
+button {
+  padding: 10px 20px;
+  background-color: #1e90ff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin: 5px;
 }
 
-function finishQuiz() {
-    clearInterval(timer);
-    questionEl.style.display = "none";
-    answerEl.style.display = "none";
-    submitBtn.style.display = "none";
-    resultEl.style.display = "none";
-    timerEl.style.display = "none";
-    document.getElementById("status").style.display = "none";
+button:hover {
+  background-color: #0f75d1;
+}
 
-    endScreen.
+#feedback {
+  font-weight: bold;
+  margin-top: 10px;
+}
