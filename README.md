@@ -69,7 +69,8 @@
       } else {
         result.textContent = "❌ Нодуруст. Аз нав кӯшиш кун!";
       }
-<!DOCTYPE html>
+
+      <!DOCTYPE html>
 <html lang="tg">
 <head>
   <meta charset="UTF-8">
